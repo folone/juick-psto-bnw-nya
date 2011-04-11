@@ -5,6 +5,8 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 import logging
 
+#import sys
+
 HELP_MSG = """Hello. I can post to juick and psto simultaneously. To start:
   1. Send me \"register <nickname>\" command with your desired nickname instead of <nickname>.
   2. I will respond with a JID, that you should add to your accounts.
@@ -30,6 +32,7 @@ class User(db.Model):
 class XMPPHandler(webapp.RequestHandler):
   
     def post(self):
+        #sys.setdefaultencoding('utf-8')
         message = xmpp.Message(self.request.POST)
         
         mesFrom = message.sender.split('/')[0]
@@ -81,7 +84,7 @@ class XMPPHandler(webapp.RequestHandler):
 	    else :
 	      mesFooter += "-p"
 	    mesFooter += " modificator.\nIf you fail to do so, your message will be sent to both juick and psto."
-	    status = xmpp.send_message(user.jid, mesFrom + "> " + (mesText + mesFooter).decode('UTF-8'))
+	    status = xmpp.send_message(user.jid, (mesFrom + "> " + mesText + mesFooter).encode('utf-8', 'xmlcharrefreplace'))
 	else :
 	  # Logging.
 	  logging.debug("We've got unknown message: " + mesFrom + "> " + mesText)
