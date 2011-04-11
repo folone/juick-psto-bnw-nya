@@ -119,7 +119,7 @@ class XMPPHandler(webapp.RequestHandler):
 	  # Sending to all.
 	  juick_status = xmpp.send_message(JUICK_BOT, mesText, mesFrom)
 	  if mesText == "#" :
-	    mesText = "+" + POST_AMOUNT
+	    mesText = "+" + str(POST_AMOUNT)
 	  psto_status = xmpp.send_message(PSTO_BOT, mesText, mesFrom)
 	  #bnw_status = xmpp.send_message(BNW_BOT, mesText, mesFrom)
 	  #nya_status = xmpp.send_message(NYA_BOT, mesText, mesFrom)
