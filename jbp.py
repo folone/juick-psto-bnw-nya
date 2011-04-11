@@ -25,6 +25,8 @@ PSTO_ANOTHER_BOT = "arts@psto.net"
 #BNW_BOT = "bnw@bnw.im"
 #NYA_BOT = "nyashaj@neko.im
 
+POST_AMOUNT = 10
+
 class User(db.Model):
     local = db.StringProperty(required=True)
     jid = db.StringProperty(required=True)
@@ -99,6 +101,8 @@ class XMPPHandler(webapp.RequestHandler):
 	elif mesText.find("-p") == 0 :
 	  # Sending to psto only
 	  mesText = mesText.replace("-p ", "", 1)
+	  if mesText == "#" :
+	    mesText = "+" + POST_AMOUNT
 	  psto_status = xmpp.send_message(PSTO_BOT, mesText, mesFrom)
 	  message.reply("Sent to psto succesfully: " + str(psto_status == xmpp.NO_ERROR))
 	#elif mesText.find("-b") == 0 :
@@ -114,6 +118,8 @@ class XMPPHandler(webapp.RequestHandler):
 	else :
 	  # Sending to all.
 	  juick_status = xmpp.send_message(JUICK_BOT, mesText, mesFrom)
+	  if mesText == "#" :
+	    mesText = "+" + POST_AMOUNT
 	  psto_status = xmpp.send_message(PSTO_BOT, mesText, mesFrom)
 	  #bnw_status = xmpp.send_message(BNW_BOT, mesText, mesFrom)
 	  #nya_status = xmpp.send_message(NYA_BOT, mesText, mesFrom)
