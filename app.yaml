@@ -1,0 +1,13 @@
+application: juick-bnw-psto
+version: 2
+runtime: python
+api_version: 1
+
+handlers:
+- url: /static
+  static_dir: static
+- url: /.*
+  script: jbp.py
+
+inbound_services:
+- xmpp_message

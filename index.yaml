@@ -1,0 +1,5 @@
+indexes:
+- kind: User
+  properties:
+  - name: local
+  - name: jid
